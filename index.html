@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生日快乐 🎉</title>
+    <title>🎀 十八岁生日快乐</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         body {
             min-height: 100vh;
             overflow: hidden;
-            background: #0a0a23;
+            background: linear-gradient(#0f0520, #2b1442);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -31,60 +31,107 @@
         .content {
             z-index: 2;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
         }
         h1 {
-            font-size: clamp(2rem, 8vw, 5rem);
-            color: #ffd700;
-            text-shadow: 0 0 15px #ff8800;
-            margin-bottom: 20px;
+            font-size: clamp(2.2rem, 9vw, 5rem);
+            background: linear-gradient(90deg,#ffb6d9,#e0b0ff,#ffd1e8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px #c888ff55;
+            margin-bottom: 16px;
+        }
+        .sub-title{
+            font-size: clamp(1.1rem,3vw,1.8rem);
+            color:#f6d8ff;
+            margin-bottom:24px;
         }
         .text-box {
-            font-size: clamp(1rem, 3vw, 1.6rem);
-            line-height: 1.8;
-            min-height: 80px;
-            color: #ffeaa7;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            line-height: 1.9;
+            min-height: 110px;
+            color: #ffe8f7;
+            max-width: 600px;
+            margin:0 auto;
         }
         #clickTip {
-            margin-top: 30px;
-            font-size: 18px;
-            color: #ffaaaa;
-            animation: blink 1.2s infinite;
+            margin-top: 32px;
+            font-size: 17px;
+            color: #ffc8e0;
+            animation: blink 1.4s infinite;
         }
         @keyframes blink {
             0%,100%{opacity:1}
-            50%{opacity:0.2}
+            50%{opacity:0.25}
         }
         .cake {
-            font-size: 80px;
-            margin-bottom:20px;
+            font-size: 90px;
+            margin-bottom:16px;
+        }
+        .audio-btn{
+            margin-top:24px;
+            padding:10px 20px;
+            border: 1px solid #ffb8e4;
+            background: rgba(255,200,230,0.15);
+            color:#ffd8ec;
+            border-radius:99px;
+            cursor:pointer;
+            font-size:16px;
+            transition:0.3s;
+        }
+        .audio-btn:hover{
+            background:rgba(255,200,230,0.35);
         }
     </style>
 </head>
 <body>
 <canvas id="canvas"></canvas>
 <div class="content">
-    <div class="cake">🎂</div>
-    <h1>生日快乐</h1>
+    <div class="cake">🎂🎀</div>
+    <h1>十八岁生日快乐</h1>
+    <div class="sub-title">愿你奔赴属于自己的山海</div>
     <div class="text-box" id="msg"></div>
-    <div id="clickTip">点击屏幕，释放更多烟花✨</div>
+    <div id="clickTip">点击屏幕绽放烟花✨</div>
+    <button class="audio-btn" id="audioBtn">🎵 播放/暂停音乐</button>
 </div>
 
+<audio id="bgMusic" loop preload="auto">
+    <!-- 线上生日歌，GitHub直接加载 -->
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+
+
 <script>
-    // 打字机文字，你可以改呢段祝福语
-    const words = "愿新一岁，平安喜乐，万事顺意，所愿皆所得，日日有星光。";
+    // ========== 祝福语（可以直接改呢段！适合18岁成人礼） ==========
+    const words = "恭喜你，正式踏入18岁。愿你永远保有热爱，勇敢自由，眼里有星光，前路皆繁花。愿新的一岁，平安喜乐，万事胜意，活成自己喜欢嘅模样。";
     const msgDom = document.getElementById('msg');
     let idx = 0;
     function type() {
         if(idx < words.length){
             msgDom.innerText += words[idx];
             idx++;
-            setTimeout(type,100);
+            setTimeout(type,90);
         }
     }
     type();
 
-    // 烟花 Canvas
+    // 音乐开关
+    const bgMusic = document.getElementById('bgMusic');
+    const audioBtn = document.getElementById('audioBtn');
+    let musicPlay = false;
+    audioBtn.onclick = ()=>{
+        if(!musicPlay){
+            bgMusic.play();
+            musicPlay = true;
+            audioBtn.innerText = "🎵 暂停音乐";
+        }else{
+            bgMusic.pause();
+            musicPlay = false;
+            audioBtn.innerText = "🎵 播放音乐";
+        }
+    }
+
+    // Canvas 烟花+星星飘落
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     function resize(){
@@ -94,20 +141,21 @@
     resize();
     window.addEventListener('resize', resize);
 
+    // 烟花粒子
     class Particle {
         constructor(x,y,color){
             this.x = x;
             this.y = y;
-            this.sx = (Math.random()-0.5)*8;
-            this.sy = (Math.random()-0.5)*8;
+            this.sx = (Math.random()-0.5)*7;
+            this.sy = (Math.random()-0.5)*7;
             this.alpha = 1;
             this.color = color;
-            this.decay = 0.008 + Math.random()*0.01;
+            this.decay = 0.007 + Math.random()*0.009;
         }
         update(){
             this.x += this.sx;
             this.y += this.sy;
-            this.sy += 0.12;
+            this.sy += 0.09;
             this.alpha -= this.decay;
         }
         draw(){
@@ -120,29 +168,65 @@
             ctx.restore();
         }
     }
+    // 飘落小星星
+    class Star {
+        constructor(){
+            this.x = Math.random()*canvas.width;
+            this.y = -30;
+            this.size = Math.random()*2 +1;
+            this.speedY = Math.random() +0.6;
+            this.speedX = (Math.random()-0.5)*0.4;
+            this.alpha = Math.random()*0.6 +0.3;
+        }
+        update(){
+            this.y += this.speedY;
+            this.x += this.speedX;
+            if(this.y > canvas.height){
+                this.y = -20;
+                this.x = Math.random()*canvas.width;
+            }
+        }
+        draw(){
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle="#ffddff";
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
     let particles = [];
-    const colors = ['#ffd700','#ff5555','#55ffff','#ff77dd','#77ff77'];
+    let stars = [];
+    // 少女粉紫烟花色系
+    const colors = ['#ffb6d9','#e0b0ff','#ffd1e8','#f7a8d8','#c79fff'];
+    // 初始化星星
+    for(let i=0;i<40;i++) stars.push(new Star());
 
     function firework(x,y){
         const c = colors[Math.floor(Math.random()*colors.length)];
-        for(let i=0;i<120;i++){
+        for(let i=0;i<100;i++){
             particles.push(new Particle(x,y,c));
         }
     }
 
-    // 自动烟花
+    // 定时自动烟花
     setInterval(()=>{
-        firework(Math.random()*canvas.width, Math.random()*canvas.height*0.6);
-    }, 1800);
+        firework(Math.random()*canvas.width, Math.random()*canvas.height*0.55);
+    }, 2200);
 
-    // 点击触发烟花
+    // 点击屏幕放烟花
     window.addEventListener('click',e=>{
         firework(e.clientX,e.clientY);
     })
 
     function render(){
-        ctx.fillStyle = 'rgba(10,10,35,0.15)';
+        ctx.fillStyle = 'rgba(15,5,32,0.12)';
         ctx.fillRect(0,0,canvas.width,canvas.height);
+        // 绘制飘落星星
+        stars.forEach(s=>{s.update();s.draw();})
+        // 烟花粒子
         for(let i=particles.length-1;i>=0;i--){
             const p = particles[i];
             p.update();
