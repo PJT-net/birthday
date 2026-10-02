@@ -1,254 +1,391 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎀 十八岁生日快乐</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            min-height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(#0f0520, #2b1442);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: "Microsoft Yahei", sans-serif;
-            color: #fff;
-        }
-        #canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .content {
-            z-index: 2;
-            text-align: center;
-            padding: 24px;
-        }
-        .char-wrap{
-            position:relative;
-            display:inline-block;
-            margin-bottom:12px;
-        }
-        .char-img{
-            max-width: 240px;
-            width: 62vw;
-            border-radius: 18px;
-            /* 柔光阴影，融合星空背景 */
-            box-shadow: 0 0 30px #b890ff66;
-            /* 降低少少亮度，令白底唔太刺眼 */
-            filter: brightness(0.92);
-        }
-        h1 {
-            font-size: clamp(2.2rem, 9vw, 5rem);
-            background: linear-gradient(90deg,#ffb6d9,#e0b0ff,#ffd1e8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 16px;
-        }
-        .sub-title{
-            font-size: clamp(1.1rem,3vw,1.8rem);
-            color:#f6d8ff;
-            margin-bottom:24px;
-        }
-        .text-box {
-            font-size: clamp(1rem, 3vw, 1.4rem);
-            line-height: 1.9;
-            min-height: 110px;
-            color: #ffe8f7;
-            max-width: 600px;
-            margin:0 auto;
-        }
-        #clickTip {
-            margin-top: 32px;
-            font-size: 17px;
-            color: #ffc8e0;
-            animation: blink 1.4s infinite;
-        }
-        @keyframes blink {
-            0%,100%{opacity:1}
-            50%{opacity:0.25}
-        }
-        .cake {
-            font-size: 90px;
-            margin-bottom:16px;
-        }
-        .audio-btn{
-            margin-top:24px;
-            padding:10px 20px;
-            border: 1px solid #ffb8e4;
-            background: rgba(255,200,230,0.15);
-            color:#ffd8ec;
-            border-radius:99px;
-            cursor:pointer;
-            font-size:16px;
-            transition:0.3s;
-        }
-        .audio-btn:hover{
-            background:rgba(255,200,230,0.35);
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎆 十八岁生日快乐</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 30%, #2a1450 0%, #0f0520 45%, #000 100%);
+        font-family: "Microsoft Yahei", sans-serif;
+        color: #fff;
+    }
+
+    #canvas {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 20px;
+        padding-top: 3vh;
+    }
+
+    .char-wrap {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .char-img {
+        max-width: 230px;
+        width: 58vw;
+        border-radius: 20px;
+        box-shadow:
+            0 0 25px rgba(180, 140, 255, 0.55),
+            0 0 60px rgba(255, 105, 180, 0.35);
+        filter: brightness(0.92) contrast(1.05);
+    }
+
+    h1 {
+        font-size: clamp(2.4rem, 10vw, 5.2rem);
+        background: linear-gradient(90deg, #ff9ad5, #c790ff, #7bd3ff, #ff9ad5);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shine 4s ease-in-out infinite;
+        margin-bottom: 12px;
+        letter-spacing: 2px;
+    }
+
+    @keyframes shine {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .sub-title {
+        font-size: clamp(1.1rem, 3vw, 1.7rem);
+        color: #e8d4ff;
+        margin-bottom: 18px;
+        text-shadow: 0 0 12px rgba(199, 144, 255, 0.7);
+    }
+
+    .text-box {
+        font-size: clamp(1rem, 2.6vw, 1.35rem);
+        line-height: 1.9;
+        min-height: 110px;
+        color: #ffe8f7;
+        max-width: 560px;
+        margin: 0 auto;
+        text-shadow: 0 0 10px rgba(255, 182, 217, 0.5);
+    }
+
+    #clickTip {
+        margin-top: 28px;
+        font-size: 16px;
+        color: #ffd1ec;
+        animation: blink 1.3s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+
+    .cake {
+        font-size: 78px;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 10px #ffb6d9);
+    }
+</style>
 </head>
+
 <body>
 <canvas id="canvas"></canvas>
+
 <div class="content">
-    <!-- 克莱恩同人插画 -->
     <div class="char-wrap">
-        <img class="char-img" alt="克莱恩" src="claire.png">
+        <img class="char-img" alt="克莱恩" src="claire.png" />
     </div>
-    <div class="cake">🎂🎀</div>
+
+    <div class="cake">🎂🎆</div>
     <h1>十八岁生日快乐</h1>
-    <div class="sub-title">愿你奔赴属于自己的山海</div>
+    <div class="sub-title">李颖希，愿你一路生花</div>
     <div class="text-box" id="msg"></div>
-    <div id="clickTip">点击屏幕绽放烟花✨</div>
-    <button class="audio-btn" id="audioBtn">🎵 播放/暂停音乐</button>
+    <div id="clickTip">点击屏幕，放一场烟花雨 ✨</div>
 </div>
 
-<audio id="bgMusic" loop preload="auto">
-    <!-- 上传loveu2.mp3到仓库之后，替换下面果行 -->
-    <source src="loveu2.mp3" type="audio/mpeg">
-
-
 <script>
-    // ========== 祝福语（已经按你写好嘅内容） ==========
+    // ========== 祝福语 ==========
     const words = "李颖希，恭喜你，正式踏入18岁。愿你永远保有热爱，勇敢自由，眼里有星光，前路皆繁花。愿新的一岁，平安喜乐，万事胜意，活成自己喜欢嘅模样。";
-    const msgDom = document.getElementById('msg');
+    const msgDom = document.getElementById("msg");
     let idx = 0;
+
     function type() {
-        if(idx < words.length){
+        if (idx < words.length) {
             msgDom.innerText += words[idx];
             idx++;
-            setTimeout(type,90);
+            setTimeout(type, 85);
         }
     }
     type();
 
-    // 音乐开关
-    const bgMusic = document.getElementById('bgMusic');
-    const audioBtn = document.getElementById('audioBtn');
-    let musicPlay = false;
-    audioBtn.onclick = ()=>{
-        if(!musicPlay){
-            bgMusic.play();
-            musicPlay = true;
-            audioBtn.innerText = "🎵 暂停音乐";
-        }else{
-            bgMusic.pause();
-            musicPlay = false;
-            audioBtn.innerText = "🎵 播放音乐";
-        }
-    }
+    // ========== Canvas 设置 ==========
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
 
-    // Canvas 烟花+星星飘落
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    function resize(){
+    function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
-    // 烟花粒子
+    // ========== 基础粒子：烟花爆炸后散开 ==========
     class Particle {
-        constructor(x,y,color){
+        constructor(x, y, color) {
             this.x = x;
             this.y = y;
-            this.sx = (Math.random()-0.5)*7;
-            this.sy = (Math.random()-0.5)*7;
+            this.sx = (Math.random() - 0.5) * 7;
+            this.sy = (Math.random() - 0.5) * 7;
             this.alpha = 1;
             this.color = color;
-            this.decay = 0.007 + Math.random()*0.009;
+            this.decay = 0.006 + Math.random() * 0.008;
+            this.size = 2;
         }
-        update(){
+        update() {
             this.x += this.sx;
             this.y += this.sy;
-            this.sy += 0.09;
+            this.sy += 0.04;
+            this.sx *= 0.99;
             this.alpha -= this.decay;
         }
-        draw(){
+        draw() {
             ctx.save();
-            ctx.globalAlpha = this.alpha;
+            ctx.globalAlpha = Math.max(this.alpha, 0);
             ctx.beginPath();
-            ctx.arc(this.x,this.y,2,0,Math.PI*2);
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
-            ctx.restore();
-        }
-    }
-    // 飘落小星星
-    class Star {
-        constructor(){
-            this.x = Math.random()*canvas.width;
-            this.y = -30;
-            this.size = Math.random()*2 +1;
-            this.speedY = Math.random() +0.6;
-            this.speedX = (Math.random()-0.5)*0.4;
-            this.alpha = Math.random()*0.6 +0.3;
-        }
-        update(){
-            this.y += this.speedY;
-            this.x += this.speedX;
-            if(this.y > canvas.height){
-                this.y = -20;
-                this.x = Math.random()*canvas.width;
-            }
-        }
-        draw(){
-            ctx.save();
-            ctx.globalAlpha = this.alpha;
-            ctx.fillStyle="#ffddff";
-            ctx.beginPath();
-            ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = this.color;
             ctx.fill();
             ctx.restore();
         }
     }
 
-    let particles = [];
-    let stars = [];
-    // 少女粉紫烟花色系
-    const colors = ['#ffb6d9','#e0b0ff','#ffd1e8','#f7a8d8','#c79fff'];
-    // 初始化星星
-    for(let i=0;i<40;i++) stars.push(new Star());
+    // ========== 星芒粒子：十字星光效果 ==========
+    class StarBurst {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.angle = Math.random() * Math.PI * 2;
+            this.speed = 2 + Math.random() * 3;
+            this.alpha = 1;
+            this.color = color;
+            this.decay = 0.012;
+            this.trail = [];
+        }
+        update() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            this.speed *= 0.96;
+            this.alpha -= this.decay;
 
-    function firework(x,y){
-        const c = colors[Math.floor(Math.random()*colors.length)];
-        for(let i=0;i<100;i++){
-            particles.push(new Particle(x,y,c));
+            this.trail.push({ x: this.x, y: this.y });
+            if (this.trail.length > 8) this.trail.shift();
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = Math.max(this.alpha, 0);
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 14;
+            ctx.shadowColor = this.color;
+
+            for (let i = 1; i < this.trail.length; i++) {
+                ctx.beginPath();
+                ctx.moveTo(this.trail[i - 1].x, this.trail[i - 1].y);
+                ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                ctx.stroke();
+            }
+
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
         }
     }
 
-    // 定时自动烟花
-    setInterval(()=>{
-        firework(Math.random()*canvas.width, Math.random()*canvas.height*0.55);
-    }, 2200);
-
-    // 点击屏幕放烟花
-    window.addEventListener('click',e=>{
-        firework(e.clientX,e.clientY);
-    })
-
-    function render(){
-        ctx.fillStyle = 'rgba(15,5,32,0.12)';
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        // 绘制飘落星星
-        stars.forEach(s=>{s.update();s.draw();})
-        // 烟花粒子
-        for(let i=particles.length-1;i>=0;i--){
-            const p = particles[i];
-            p.update();
-            p.draw();
-            if(p.alpha <= 0) particles.splice(i,1);
+    // ========== 烟花弹：升空后爆炸 ==========
+    class Firework {
+        constructor(sx, sy, tx, ty, color) {
+            this.x = sx;
+            this.y = sy;
+            this.tx = tx;
+            this.ty = ty;
+            this.color = color;
+            this.speed = 4 + Math.random() * 2;
+            this.angle = Math.atan2(ty - sy, tx - sx);
+            this.alpha = 1;
+            this.exploded = false;
         }
+        update() {
+            if (!this.exploded) {
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+
+                if (
+                    Math.hypot(this.tx - this.x, this.ty - this.y) < 8 ||
+                    this.y <= this.ty
+                ) {
+                    this.exploded = true;
+                    this.explode();
+                }
+            }
+        }
+        draw() {
+            if (this.exploded) return;
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = 16;
+            ctx.shadowColor = this.color;
+            ctx.fill();
+            ctx.restore();
+        }
+        explode() {
+            // 主爆裂
+            for (let i = 0; i < 140; i++) {
+                particles.push(new Particle(this.x, this.y, this.color));
+            }
+            // 星芒爆裂
+            for (let i = 0; i < 20; i++) {
+                starBursts.push(new StarBurst(this.x, this.y, this.color));
+            }
+        }
+    }
+
+    // ========== 环形烟花：点击触发 ==========
+    class RingFirework {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = 2;
+            this.alpha = 1;
+            this.color = color;
+            this.decay = 0.01;
+        }
+        update() {
+            this.radius += 4;
+            this.alpha -= this.decay;
+        }
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = Math.max(this.alpha, 0);
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = this.color;
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+
+    let particles = [];
+    let fireworks = [];
+    let starBursts = [];
+    let rings = [];
+
+    const colors = [
+        "#ff5ec0",
+        "#c790ff",
+        "#7bd3ff",
+        "#ffd84d",
+        "#7cff9f",
+        "#ff9a5a",
+        "#ff7171",
+        "#b6ffff"
+    ];
+
+    function randomColor() {
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // 自动放烟花
+    function autoLaunch() {
+        const sx = Math.random() * canvas.width;
+        const sy = canvas.height;
+        const tx = Math.random() * canvas.width;
+        const ty = canvas.height * 0.2 + Math.random() * canvas.height * 0.35;
+        const color = randomColor();
+        fireworks.push(new Firework(sx, sy, tx, ty, color));
+    }
+
+    // 点击：环形烟花 + 强爆裂
+    window.addEventListener("click", (e) => {
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const color = randomColor();
+                rings.push(new RingFirework(e.clientX, e.clientY, color));
+
+                for (let j = 0; j < 80; j++) {
+                    particles.push(new Particle(e.clientX, e.clientY, color));
+                }
+                for (let j = 0; j < 14; j++) {
+                    starBursts.push(new StarBurst(e.clientX, e.clientY, color));
+                }
+            }, i * 120);
+        }
+    });
+
+    // 自动发射频率
+    setInterval(autoLaunch, 900);
+
+    // 页面一进来先放几个开场烟花
+    window.addEventListener("load", () => {
+        for (let i = 0; i < 3; i++) {
+            setTimeout(autoLaunch, i * 400);
+        }
+    });
+
+    // ========== 主渲染循环 ==========
+    function render() {
+        ctx.fillStyle = "rgba(10, 5, 30, 0.18)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+            fireworks[i].update();
+            fireworks[i].draw();
+            if (fireworks[i].exploded) fireworks.splice(i, 1);
+        }
+
+        for (let i = rings.length - 1; i >= 0; i--) {
+            rings[i].update();
+            rings[i].draw();
+            if (rings[i].alpha <= 0) rings.splice(i, 1);
+        }
+
+        for (let i = starBursts.length - 1; i >= 0; i--) {
+            starBursts[i].update();
+            starBursts[i].draw();
+            if (starBursts[i].alpha <= 0) starBursts.splice(i, 1);
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].update();
+            particles[i].draw();
+            if (particles[i].alpha <= 0) particles.splice(i, 1);
+        }
+
         requestAnimationFrame(render);
     }
     render();
