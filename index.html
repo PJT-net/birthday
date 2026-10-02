@@ -33,12 +33,19 @@
             text-align: center;
             padding: 24px;
         }
-        .char-img{
-            max-width: 220px;
-            width: 60vw;
-            border-radius: 16px;
-            box-shadow: 0 0 25px #d8aaff70;
+        .char-wrap{
+            position:relative;
+            display:inline-block;
             margin-bottom:12px;
+        }
+        .char-img{
+            max-width: 240px;
+            width: 62vw;
+            border-radius: 18px;
+            /* 柔光阴影，融合星空背景 */
+            box-shadow: 0 0 30px #b890ff66;
+            /* 降低少少亮度，令白底唔太刺眼 */
+            filter: brightness(0.92);
         }
         h1 {
             font-size: clamp(2.2rem, 9vw, 5rem);
@@ -94,8 +101,10 @@
 <body>
 <canvas id="canvas"></canvas>
 <div class="content">
-    <!-- 诡秘之主 克莱恩 同人插画 -->
-    <img class="char-img" alt="克莱恩" src="https://p3-flow-image-sign.byteimg.com/tos-cn-i-a9rns2rl98/41203008138b403892002f2421004111~tplv-a9rns2rl98-image.image">
+    <!-- 克莱恩同人插画 -->
+    <div class="char-wrap">
+        <img class="char-img" alt="克莱恩" src="claire.png">
+    </div>
     <div class="cake">🎂🎀</div>
     <h1>十八岁生日快乐</h1>
     <div class="sub-title">愿你奔赴属于自己的山海</div>
@@ -105,17 +114,12 @@
 </div>
 
 <audio id="bgMusic" loop preload="auto">
-    <!-- ========== 音乐设置说明 ==========
-    想使用陈伟霆《Love U2》：
-    1. 下载歌曲，命名为 loveu2.mp3
-    2. 上传到你嘅github仓库，同index.html放喺同一目录
-    3. 将下面一行替换成：<source src="loveu2.mp3" type="audio/mpeg">
-    -->
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <!-- 上传loveu2.mp3到仓库之后，替换下面果行 -->
+    <source src="loveu2.mp3" type="audio/mpeg">
 
 
 <script>
-    // ========== 祝福语（已经按你要求写好） ==========
+    // ========== 祝福语（已经按你写好嘅内容） ==========
     const words = "李颖希，恭喜你，正式踏入18岁。愿你永远保有热爱，勇敢自由，眼里有星光，前路皆繁花。愿新的一岁，平安喜乐，万事胜意，活成自己喜欢嘅模样。";
     const msgDom = document.getElementById('msg');
     let idx = 0;
@@ -177,7 +181,6 @@
             ctx.beginPath();
             ctx.arc(this.x,this.y,2,0,Math.PI*2);
             ctx.fillStyle = this.color;
-            ctx.fill();
             ctx.restore();
         }
     }
